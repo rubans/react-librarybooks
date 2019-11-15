@@ -62,7 +62,7 @@ const Users = () => {
 						(
 							<Fragment>
 								<div className="centered">
-									<h3>View users</h3>
+									<h3>Users</h3>
 								</div>
 								<div style={{ display: "flex", justifyContent: "flex-end" }}>
 									<button
