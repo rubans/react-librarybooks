@@ -16,8 +16,8 @@ const EditUserForm = props => {
     <form
       onSubmit={event => {
         event.preventDefault()
-		props.updateUser(user.id, user)
-		props.setViewMode("viewUser")
+        props.updateUser(user.id, user)
+        props.setViewMode("viewUser")
       }}
     >
       <label>Name</label>

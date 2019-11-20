@@ -3,7 +3,8 @@ import UserForm from './forms/UserForm'
 import UserTable from './tables/UserTable'
 
 const Users = () => {
-	// Data
+	console.log("users:"+this.props.location.state)
+	// Mock Data
 	const usersData = [
 		{ id: 1, name: 'Tania', username: 'floppydiskette' },
 		{ id: 2, name: 'Craig', username: 'siliconeidolon' },
@@ -15,7 +16,7 @@ const Users = () => {
 	// Setting state
 	const [ users, setUsers ] = useState(usersData)
 	const [ currentUser, setCurrentUser ] = useState(initialFormState)
-	const [ userViewMode, setViewMode ] = useState("view")
+	const [ mode, setViewMode ] = useState("view")
 
 	// CRUD operations
 	const addUser = () => {
@@ -38,7 +39,7 @@ const Users = () => {
 	return (
 			 <div className="flex-row">
 				<div className="flex-large">
-				{(userViewMode == "edit") ? (
+				{(mode == "edit") ? (
 						<Fragment>
 							<h3>Edit user</h3>
 							<UserForm
@@ -48,7 +49,7 @@ const Users = () => {
 								updateUser={updateUser}
 							/>
 				</Fragment> ) : 
-					(userViewMode == "new") ? 
+					(mode == "new") ? 
 						(
 							<Fragment>
 								<h3>Create user</h3>
