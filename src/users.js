@@ -1,9 +1,12 @@
 import React, { useState, Fragment } from 'react'
 import UserForm from './forms/UserForm'
 import UserTable from './tables/UserTable'
+import {loggedIn} from "./utils"
+import {
+	Redirect
+} from "react-router-dom";
 
-const Users = () => {
-	console.log("users:"+this.props.location.state)
+const Users = (props) => {
 	// Mock Data
 	const usersData = [
 		{ id: 1, name: 'Tania', username: 'floppydiskette' },
@@ -35,7 +38,16 @@ const Users = () => {
 		setViewMode("edit")
 		setCurrentUser({ id: user.id, name: user.name, username: user.username })
 	}
-
+	if(!loggedIn())
+	{
+		let currentHref = props.match.path
+		console.log("current href :"+currentHref)
+		const loginHref = {
+			pathname: '/login',
+			state: { from: {pathname: currentHref} }
+		}
+		props.history.push(loginHref)
+	}
 	return (
 			 <div className="flex-row">
 				<div className="flex-large">

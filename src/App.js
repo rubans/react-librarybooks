@@ -13,36 +13,33 @@ import {
 	NavLink,
 	Route,
 	Redirect,
-  } from "react-router-dom";
+	RouterChildContext,
+	RouteComponentProps
+}from "react-router-dom";
+import {loggedIn} from "./utils"
 
-  const loggedIn = () => {
-	if (!sessionStorage.getItem('auth-token')) {
-		console.log('no auth token set');
-		return false;
-		//do something like redirect to login page
-	} else {
-		console.log('token found. Logged in.')
-		return true
-	}
-  }
-  const requireAuth = (props, href) => {
-	const location = {
+const requireAuth = (props, href) => {
+	const loginHref = {
 		pathname: '/login',
 		state: { from: {pathname: href} }
 	}
-	props.history.push(location);
-	console.log("app history:"+JSON.stringify(props.history))
-
+	const redirect = {
+		pathname: '/users',
+		state: { from: {pathname: href} }
+	}
+	//props.history.push(loginHref);
+	//console.log("app history:"+JSON.stringify(props.history))
+	
 	if (!loggedIn()) {
-		return <Redirect to={location} />
-    }
-    return <Redirect to={href} />
+		return <Redirect to={loginHref} />
+	}
+	alert("loggedIn")
+    return <Redirect to={redirect} />
 }
   
 
 const App = (props) => {
-	console.log(props)
-		
+	console.log("App"+JSON.stringify(props))
 	return (
 		<Router>
 			<div className="App">
@@ -55,10 +52,9 @@ const App = (props) => {
 				</Navbar>
 			</div>
 			<Route path="/" exact component={Home} />
-			<Route path="/login" exact component={Login
-			} />
-			<Route path="/users" exact render={(props) => requireAuth(props, props.match.path)}/>
-			<Route path="/books" exact component={Books} />
+			<Route path="/login" exact component={Login} />
+			<Route path="/users" render={(props) => <Users {...props} />}/>
+			<Route path="/books" render={(props) => <Books {...props} />} />
 		</Router>
 	)
 }

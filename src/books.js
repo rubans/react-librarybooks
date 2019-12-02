@@ -1,10 +1,11 @@
 import React, { useState, Fragment } from 'react'
 import BookForm from './forms/BookForm'
 import BookTable from './tables/BookTable'
+import {loggedIn} from "./utils"
 
-
-
-const Books = () => {
+const Books = (props) => {
+	console.log("book:"+JSON.stringify(props))
+	console.log("isAuth:"+loggedIn())
     // Mock Data
 	const booksData = [
 		{ id: 1, name: 'Tania', ownerEmail: 'floppydiskette' }
