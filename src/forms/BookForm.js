@@ -8,7 +8,7 @@ const EditBookForm = props => {
     const { name, value } = event.target
     setBook({ ...book, [name]: value })
   }
-  console.log("book:"+book) 
+  console.log("bookform:"+JSON.stringify(book)) 
   return (
     <form
       onSubmit={event => {
@@ -21,7 +21,7 @@ const EditBookForm = props => {
       <input type="text" name="name" value={book.name} onChange={handleInputChange} />
       <label>Owner Email</label>
       <input type="text" name="ownerEmail" value={book.ownerEmail} onChange={handleInputChange} />
-      <button>Save</button>
+      <button className="button muted-button">Save</button>
       <button onClick={() => props.setViewMode("viewBook")} className="button muted-button">
         Cancel
       </button>

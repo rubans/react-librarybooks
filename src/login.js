@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from 'react'
-import { useHistory, withRouter  } from "react-router-dom"
+import { useHistory, withRouter, Link } from "react-router-dom"
 
 const Login = props => {
     console.log("login:"+JSON.stringify(props.location.state.from.pathname))
@@ -68,6 +68,7 @@ return (
             <button type="submit" className="btn btn-primary">
                 Submit
             </button>
+            <Link to="/register" className="btn btn-link">Register</Link>
       </form>
     </div>
   )

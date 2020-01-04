@@ -6,6 +6,8 @@ import {
 	Redirect
 } from "react-router-dom";
 
+export const initialFormState = { id: null, name: '', username: '', password: '' }
+
 const Users = (props) => {
 	// Mock Data
 	const usersData = [
@@ -14,7 +16,7 @@ const Users = (props) => {
 		{ id: 3, name: 'Ben', username: 'benisphere' },
 	]
 
-	const initialFormState = { id: null, name: '', username: '' }
+	const initialFormState = initialFormState
 
 	// Setting state
 	const [ users, setUsers ] = useState(usersData)
@@ -64,7 +66,7 @@ const Users = (props) => {
 					(mode == "new") ? 
 						(
 							<Fragment>
-								<h3>Create user</h3>
+								<h3>Register</h3>
 								<UserForm
 									editing={false}
 									setViewMode={setViewMode}
@@ -78,12 +80,12 @@ const Users = (props) => {
 									<h3>Users</h3>
 								</div>
 								<div style={{ display: "flex", justifyContent: "flex-end" }}>
-									<button
+									{/* <button
 										onClick={() => addUser()}
 										className="button muted-button"
 									>
 										Add New User
-									</button>
+									</button> */}
 								</div>
 								<UserTable users={users} editRow={editUser} deleteUser={deleteUser} />
 						</Fragment> )}

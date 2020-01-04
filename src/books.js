@@ -1,14 +1,15 @@
 import React, { useState, Fragment } from 'react'
 import BookForm from './forms/BookForm'
 import BookTable from './tables/BookTable'
-import {loggedIn} from "./utils"
+import {loggedIn} from './utils'
+import {createBook} from './firebaseClient'
 
 const Books = (props) => {
 	console.log("book:"+JSON.stringify(props))
 	console.log("isAuth:"+loggedIn())
     // Mock Data
 	const booksData = [
-		{ id: 1, name: 'Tania', ownerEmail: 'floppydiskette' }
+		{ id: 1, name: 'Book1', ownerEmail: 'floppydiskette' }
 	]
 
 	const initialFormState = { id: null, name: '', ownerEmail: '' }
@@ -20,6 +21,7 @@ const Books = (props) => {
 
 	// CRUD operations
 	const addBook = () => {
+		createBook()
 		setViewMode("new")
 	}
 
@@ -29,11 +31,12 @@ const Books = (props) => {
 
 	const updateBook = (id, updatedBook) => {
 		setBooks(books.map(book => (book.id === id ? updatedBook : book)))
+		console.log("	"+JSON.stringify(books))
 	}
 
 	const editBook = book => {
 		setViewMode("edit")
-		setCurrentBook({ id: book.id, book: book.name, ownerEmail: book.ownerEmail })
+		setCurrentBook({ id: book.id, name: book.name, ownerEmail: book.ownerEmail })
 	}
 
     

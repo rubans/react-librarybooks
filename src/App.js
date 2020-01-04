@@ -7,6 +7,7 @@ import {
 import Users from './users'
 import Books from './books'
 import Login from './login'
+import Register from './forms/RegisterForm'
 import {
 	BrowserRouter as Router,
 	Link,
@@ -18,24 +19,24 @@ import {
 }from "react-router-dom";
 import {loggedIn} from "./utils"
 
-const requireAuth = (props, href) => {
-	const loginHref = {
-		pathname: '/login',
-		state: { from: {pathname: href} }
-	}
-	const redirect = {
-		pathname: '/users',
-		state: { from: {pathname: href} }
-	}
-	//props.history.push(loginHref);
-	//console.log("app history:"+JSON.stringify(props.history))
-	
-	if (!loggedIn()) {
-		return <Redirect to={loginHref} />
-	}
-	alert("loggedIn")
-    return <Redirect to={redirect} />
-}
+	// const requireAuth = (props, href) => {
+	// 	const loginHref = {
+	// 		pathname: '/login',
+	// 		state: { from: {pathname: href} }
+	// 	}
+	// 	const redirect = {
+	// 		pathname: '/users',
+	// 		state: { from: {pathname: href} }
+	// 	}
+	// 	//props.history.push(loginHref);
+	// 	//console.log("app history:"+JSON.stringify(props.history))
+		
+	// 	if (!loggedIn()) {
+	// 		return <Redirect to={loginHref} />
+	// 	}
+	// 	alert("loggedIn")
+	//     return <Redirect to={redirect} />
+	// }
   
 
 const App = (props) => {
@@ -55,6 +56,7 @@ const App = (props) => {
 			<Route path="/login" exact component={Login} />
 			<Route path="/users" render={(props) => <Users {...props} />}/>
 			<Route path="/books" render={(props) => <Books {...props} />} />
+			<Route path="/register" exact component={Register}/>
 		</Router>
 	)
 }
