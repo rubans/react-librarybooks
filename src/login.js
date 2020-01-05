@@ -1,5 +1,6 @@
-import React, { useState, Fragment } from 'react'
-import { useHistory, withRouter, Link } from "react-router-dom"
+import React, {useState, Fragment} from 'react'
+import {useHistory, withRouter, Link} from "react-router-dom"
+import {authorize} from './firebaseClient'
 
 const Login = props => {
     console.log("login:"+JSON.stringify(props.location.state.from.pathname))
@@ -26,17 +27,24 @@ const Login = props => {
         }
         console.log("history:"+JSON.stringify(props))
 
-        if ((emailInput == hardcodedCred.email) && (passwordInput == hardcodedCred.password)) {
-            console.log("login successful!")
-            //combination is good. Log them in.
-            //this token can be anything. You can use random.org to generate a random string;
-            const token = '123456abcdef';
-            sessionStorage.setItem('auth-token', token);
-            props.history.push(props.location.state.from.pathname);
-        } else {
+        authorize(emailInput,passwordInput).then(function(result) {
+            console.log("login successful!"+result)
+            if(result)
+            {
+                //combination is good. Log them in.
+                //this token can be anything. You can use random.org to generate a random string;
+                const token = '123456abcdef';
+                sessionStorage.setItem('auth-token', token);
+                props.history.push(props.location.state.from.pathname);
+            }
+            else
+                throw new Error()
+        }).catch(function(error)
+        {
+            console.error("login unsuccessful!"+error)
             //bad combination
             alert('wrong email or password combination');
-        }
+        })
     }
 
 return (

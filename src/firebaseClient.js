@@ -10,15 +10,18 @@ var config = {
 firebase.initializeApp(config);
 console.log("Firebase initialized!")
 
-export const authorize = (async () => {
-    await firebase.auth().signInWithEmailAndPassword("admin@booklibrary.com", "123456")
+export const authorize = (async (username, password) => {
+    var auhorized = false;
+    await firebase.auth().signInWithEmailAndPassword(username, password)
         .then(function(result) {
-            console.log("Authorized with Firebase!");
+            auhorized = true;
         })
         .catch(function(error) {
             // Handle Errors here.
-            console.log("Unauthorized with Firebase : "+error);
+            console.error("Unauthorized with Firebase : "+error);
         });
+        console.log("Authorized with Firebase!"+auhorized);
+        return auhorized;
 })
 
 export const createUser = (email, password) => {
