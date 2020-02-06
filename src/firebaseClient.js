@@ -1,4 +1,5 @@
 import { initializeApp, firestore } from "firebase";
+import {global} from "./Global";
 const firebase = require("firebase");
 require("firebase/firestore");
 // Initialize Cloud Firestore through Firebase
@@ -45,36 +46,69 @@ export const deauthorize = () => {
       });
 }
 
-export const createBook = () => {
-    authorize().then(function(){
+export const updateBookInDB = (book) => {
         console.log("createBook!");
+        //console.log("cache created : "+global.Date)
         var db = firebase.firestore();
+        if(book.id === null)
+        {
+            db.collection("Library_Books").add(book)
+            .then(function(docRef) {
+                console.log("Document written with ID: ", docRef.id);
+            })
+            .catch(function(error) {
+                console.error("Error adding document: ", error);
+                alert(error);
+                //throw error;
+            });
+        }
+        else
+        {
+            db.collection("Library_Books").doc(book.id).update(book)
+            .then(function(docRef) {
+                console.log("Document written with ID: ", book.id);
+            })
+            .catch(function(error) {
+                console.error("Error adding document: ", error);
+                alert(error);
+                //throw error;
+            });
+        }
 
-        // var docRef = db.collection("Library_Books").doc("SF")
-        // docRef.get().then(function(doc) {
-        //     if (doc.exists) {
-        //         console.log("Document data:", doc.data());
-        //     } else {
-        //         // doc.data() will be undefined in this case
-        //         console.log("No such document!");
-        //     }
-        // }).catch(function(error) {
-        //     console.log("Error getting document:", error);
-        // });
+}
 
-        db.collection("Library_Books").add({
-            first: "Ada",
-            last: "Lovelace",
-            born: 1815
-        })
-        .then(function(docRef) {
-            console.log("Document written with ID: ", docRef.id);
-        })
-        .catch(function(error) {
-            console.error("Error adding document: ", error);
-            alert(error);
-            //throw error;
-        });
+export const deleteBookInDB = (id) => {
+    console.log("deleteBook!");
+    //console.log("cache created : "+global.Date)
+    var db = firebase.firestore();
+    db.collection("Library_Books").doc(id).delete()
+    .then(function(docRef) { 
+        console.log("Document deleted with ID: ", id);
+    })
+    .catch(function(error) {
+        console.error("Error deleting document: ", error);
+        alert(error);
+        //throw error;
     });
 }
 
+export const getBooksInDB = (async () => {
+        console.log("getBooks!");
+        var books = []
+        //console.log("cache created : "+global.Date)
+        var db = firebase.firestore();
+        await db.collection("Library_Books").get()
+            .then(function(querySnapshot) {
+                books = querySnapshot.docs.map(doc => ({...doc.data(),id:doc.id}));
+                console.log("books:"+JSON.stringify(books))
+            })
+            .catch(function(error) {
+                console.error("Error adding document: ", error);
+                alert(error);
+                //throw error;
+            });
+        console.log("All documents retrieved!");
+        console.log("books : "+JSON.stringify(books))
+        return books;
+
+})

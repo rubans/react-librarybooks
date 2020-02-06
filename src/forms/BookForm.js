@@ -8,7 +8,7 @@ const EditBookForm = props => {
     const { name, value } = event.target
     setBook({ ...book, [name]: value })
   }
-  console.log("bookform:"+JSON.stringify(book)) 
+  //console.log("bookform:"+JSON.stringify(book)) 
   return (
     <form
       onSubmit={event => {

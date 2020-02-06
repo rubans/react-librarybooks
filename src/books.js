@@ -1,40 +1,52 @@
-import React, { useState, Fragment } from 'react'
+import React, { useState, Fragment, useEffect } from 'react'
 import BookForm from './forms/BookForm'
 import BookTable from './tables/BookTable'
 import {loggedIn} from './utils'
-import {createBook} from './firebaseClient'
+import {updateBookInDB, getBooksInDB, deleteBookInDB} from './firebaseClient'
 
 const Books = (props) => {
 	console.log("book:"+JSON.stringify(props))
 	console.log("isAuth:"+loggedIn())
-    // Mock Data
-	const booksData = [
-		{ id: 1, name: 'Book1', ownerEmail: 'floppydiskette' }
-	]
+	// Mock Data
+	const[books, setBooks] = useState([]);
+	useEffect(async () => {
+		let mounted = true;
+		const data = await getBooksInDB();
+		console.log("load data:"+JSON.stringify(data))
+		setBooks(data)
+	},[]);
+
+	// const booksData = 	[
+	// 	{ id: null, name: 'Tania', ownerEmail: 'floppydiskette' }
+	// ]
+	console.log("loaded books:"+JSON.stringify(books))
+	
 
 	const initialFormState = { id: null, name: '', ownerEmail: '' }
 
 	// Setting state
-	const [ books, setBooks ] = useState(booksData)
+	//const [ books, setBooks ] = useState(booksData)
+	console.log("set books:"+JSON.stringify(books))
 	const [ currentBook, setCurrentBook ] = useState(initialFormState)
 	const [ mode, setViewMode ] = useState("view")
 
 	// CRUD operations
-	const addBook = () => {
-		createBook()
+	const addBookView = () => {
 		setViewMode("new")
 	}
 
 	const deleteBook = id => {
+		deleteBookInDB(id);
 		setBooks(books.filter(book => book.id !== id))
 	}
 
 	const updateBook = (id, updatedBook) => {
+		updateBookInDB(updatedBook);
 		setBooks(books.map(book => (book.id === id ? updatedBook : book)))
-		console.log("	"+JSON.stringify(books))
+		console.log("update book"+JSON.stringify(books))
 	}
 
-	const editBook = book => {
+	const editBookView = book => {
 		setViewMode("edit")
 		setCurrentBook({ id: book.id, name: book.name, ownerEmail: book.ownerEmail })
 	}
@@ -61,7 +73,7 @@ const Books = (props) => {
 									editing={false}
 									setViewMode={setViewMode}
 									currentBook={currentBook}
-								updateBook={updateBook}
+									updateBook={updateBook}
 								/>
 					</Fragment> ) :
 						(
@@ -71,13 +83,13 @@ const Books = (props) => {
 								</div>
 								<div style={{ display: "flex", justifyContent: "flex-end" }}>
 									<button
-										onClick={() => addBook()}
+										onClick={() => addBookView()}
 										className="button muted-button"
 									>
 										Add New Book
 									</button>
 								</div>
-								<BookTable books={books} editRow={editBook} deleteBook={deleteBook} />
+								<BookTable books={books} editRow={editBookView} deleteBook={deleteBook} />
 						</Fragment> )}
             </div>
         </div>

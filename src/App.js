@@ -40,7 +40,7 @@ import {loggedIn} from "./utils"
   
 
 const App = (props) => {
-	console.log("App"+JSON.stringify(props))
+	console.log("App:"+JSON.stringify(props))
 	return (
 		<Router>
 			<div className="App">
