@@ -1,25 +1,33 @@
-import React, { useState, Fragment } from 'react'
+import React, { useState, Fragment, useEffect } from 'react'
 import UserForm from './forms/UserForm'
 import UserTable from './tables/UserTable'
-import {loggedIn} from "./utils"
-import {
-	Redirect
-} from "react-router-dom";
+import {getUsersInDB} from './firebaseClient'
 
 export const initialFormState = { id: null, name: '', username: '', password: '' }
 
 const Users = (props) => {
+	// if(!loggedIn())
+	// {
+	// 	redirectToLogin(props);
+	// 	return;
+	// }
+	const[users, setUsers] = useState([]);
+	useEffect(async () => {
+		let mounted = true;
+		const data = await getUsersInDB();
+		console.log("load data:"+JSON.stringify(data))
+		setUsers(data)
+	},[]);
 	// Mock Data
-	const usersData = [
-		{ id: 1, name: 'Tania', username: 'floppydiskette' },
-		{ id: 2, name: 'Craig', username: 'siliconeidolon' },
-		{ id: 3, name: 'Ben', username: 'benisphere' },
-	]
+	// const usersData = [
+	// 	{ id: 1, name: 'Tania', username: 'floppydiskette' },
+	// 	{ id: 2, name: 'Craig', username: 'siliconeidolon' },
+	// 	{ id: 3, name: 'Ben', username: 'benisphere' },
+	// ]
 
 	const initialFormState = initialFormState
 
 	// Setting state
-	const [ users, setUsers ] = useState(usersData)
 	const [ currentUser, setCurrentUser ] = useState(initialFormState)
 	const [ mode, setViewMode ] = useState("view")
 
@@ -40,20 +48,12 @@ const Users = (props) => {
 		setViewMode("edit")
 		setCurrentUser({ id: user.id, name: user.name, username: user.username })
 	}
-	if(!loggedIn())
-	{
-		let currentHref = props.match.path
-		console.log("current href :"+currentHref)
-		const loginHref = {
-			pathname: '/login',
-			state: { from: {pathname: currentHref} }
-		}
-		props.history.push(loginHref)
-	}
+	
 	return (
-			 <div className="flex-row">
+			//loggedIn() ?
+			 (<div className="flex-row">
 				<div className="flex-large">
-				{(mode == "edit") ? (
+				{(mode === "edit") ? (
 						<Fragment>
 							<h3>Edit user</h3>
 							<UserForm
@@ -63,7 +63,7 @@ const Users = (props) => {
 								updateUser={updateUser}
 							/>
 				</Fragment> ) : 
-					(mode == "new") ? 
+					(mode === "new") ? 
 						(
 							<Fragment>
 								<h3>Register</h3>
@@ -91,6 +91,9 @@ const Users = (props) => {
 						</Fragment> )}
 				</div>
 			</div>
+			 ) 
+			//  :
+			//  (<Redirect to={{ pathname: '/login', state: { from: props.location } }} />)
 	)
 }
 

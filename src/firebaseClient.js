@@ -1,6 +1,6 @@
 import { initializeApp, firestore } from "firebase";
 import {global} from "./Global";
-const firebase = require("firebase");
+export const firebase = require("firebase");
 require("firebase/firestore");
 // Initialize Cloud Firestore through Firebase
 var config = {
@@ -10,6 +10,10 @@ var config = {
   }
 firebase.initializeApp(config);
 console.log("Firebase initialized!")
+
+export const getCurrentUser = () =>{
+    return firebase.auth().currentUser
+}
 
 export const authorize = (async (username, password) => {
     var auhorized = false;
@@ -26,7 +30,12 @@ export const authorize = (async (username, password) => {
 })
 
 export const createUser = (email, password) => {
+    var db = firebase.firestore();
     firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then(function(){
+        // add username to tabel too
+        db.collection("Library_Users").add({username:email})
+    })
     .then(function(){
         console.log("created user.")
     })
@@ -48,6 +57,7 @@ export const deauthorize = () => {
 
 export const updateBookInDB = (book) => {
         console.log("createBook!");
+        console.log("firebase:"+JSON.stringify(firebase.auth()))
         //console.log("cache created : "+global.Date)
         var db = firebase.firestore();
         if(book.id === null)
@@ -97,18 +107,39 @@ export const getBooksInDB = (async () => {
         var books = []
         //console.log("cache created : "+global.Date)
         var db = firebase.firestore();
+        console.log("current user:"+JSON.stringify(getCurrentUser()));
+        
         await db.collection("Library_Books").get()
             .then(function(querySnapshot) {
                 books = querySnapshot.docs.map(doc => ({...doc.data(),id:doc.id}));
                 console.log("books:"+JSON.stringify(books))
             })
             .catch(function(error) {
-                console.error("Error adding document: ", error);
+                console.error("Error getting document: ", error);
                 alert(error);
                 //throw error;
             });
         console.log("All documents retrieved!");
         console.log("books : "+JSON.stringify(books))
         return books;
-
 })
+
+export const getUsersInDB = (async (nextPageToken) => {
+    var users = []
+    console.log("getUsersInDB")
+    var db = firebase.firestore();
+    await db.collection("Library_Users").get()
+    .then(function(querySnapshot) {
+        users = querySnapshot.docs.map(doc => ({...doc.data(),id:doc.id}));
+        console.log("users1 : "+JSON.stringify(users))
+        return users;
+    })
+    .catch(function(error) {
+        console.error("Error getting document: ", error);
+        alert(error);
+        //throw error;
+    });
+    console.log("All documents retrieved!");
+    console.log("users : "+JSON.stringify(users))
+    return users;
+  })

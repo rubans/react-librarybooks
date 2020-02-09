@@ -1,26 +1,25 @@
 import React, { useState, Fragment, useEffect } from 'react'
 import BookForm from './forms/BookForm'
 import BookTable from './tables/BookTable'
-import {loggedIn} from './utils'
-import {updateBookInDB, getBooksInDB, deleteBookInDB} from './firebaseClient'
+import {firebase, updateBookInDB, getBooksInDB, deleteBookInDB} from './firebaseClient'
+//import {loggedIn} from './userContext'
 
 const Books = (props) => {
+	//const authUser = CurrentUser(firebase);
 	console.log("book:"+JSON.stringify(props))
-	console.log("isAuth:"+loggedIn())
-	// Mock Data
+	//console.log("isAuth1:"+loggedIn())
 	const[books, setBooks] = useState([]);
 	useEffect(async () => {
-		let mounted = true;
 		const data = await getBooksInDB();
 		console.log("load data:"+JSON.stringify(data))
 		setBooks(data)
 	},[]);
 
+	// Mock Data
 	// const booksData = 	[
 	// 	{ id: null, name: 'Tania', ownerEmail: 'floppydiskette' }
 	// ]
 	console.log("loaded books:"+JSON.stringify(books))
-	
 
 	const initialFormState = { id: null, name: '', ownerEmail: '' }
 

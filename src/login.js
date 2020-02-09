@@ -8,9 +8,6 @@ const Login = props => {
     const [emailInput, setEmailInput] = useState('')
     const [passwordInput, setPasswordInput] = useState('')
 //    console.log("login history:"+JSON.stringify(props.history))
-
-    const history = useHistory();
-
     const handleEmailChange = (e) => {
         setEmailInput(e.target.value);
     }
@@ -21,10 +18,6 @@ const Login = props => {
 
     const handleLoginSubmit = (e) => {
         e.preventDefault();
-        let hardcodedCred = {
-            email: 'rubansiva@hotmail.com',
-            password: 'liverpool'
-        }
         console.log("history:"+JSON.stringify(props))
 
         authorize(emailInput,passwordInput).then(function(result) {
