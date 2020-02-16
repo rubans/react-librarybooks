@@ -11,9 +11,9 @@ var config = {
 firebase.initializeApp(config);
 console.log("Firebase initialized!")
 
-export const getCurrentUser = () =>{
-    return firebase.auth().currentUser
-}
+// export const getCurrentUser = () =>{
+//     return firebase.auth().currentUser
+// }
 
 export const authorize = (async (username, password) => {
     var auhorized = false;
@@ -107,7 +107,6 @@ export const getBooksInDB = (async () => {
         var books = []
         //console.log("cache created : "+global.Date)
         var db = firebase.firestore();
-        console.log("current user:"+JSON.stringify(getCurrentUser()));
         
         await db.collection("Library_Books").get()
             .then(function(querySnapshot) {
