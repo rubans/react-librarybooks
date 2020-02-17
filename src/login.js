@@ -26,8 +26,8 @@ const Login = props => {
             {
                 //combination is good. Log them in.
                 //this token can be anything. You can use random.org to generate a random string;
-                const token = '123456abcdef';
-                sessionStorage.setItem('auth-token', token);
+                //const token = '123456abcdef';
+                //sessionStorage.setItem('auth-token', token);
                 props.history.push(props.location.state.from.pathname);
             }
             else
@@ -41,8 +41,8 @@ const Login = props => {
     }
 
 return (
-    <div className="login-page">
-        <h2>Login In</h2>
+    <div class="container col-lg-3 center-block">
+        <h3>Login In</h3>
         <form autoComplete="off" onSubmit={handleLoginSubmit}>
             <div className="form-group">
                 <input

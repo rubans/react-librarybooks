@@ -9,10 +9,13 @@ const Books = (props) => {
 	console.log("book:"+JSON.stringify(props))
 	//console.log("isAuth1:"+loggedIn())
 	const[books, setBooks] = useState([]);
-	useEffect(async () => {
-		const data = await getBooksInDB();
-		console.log("load data:"+JSON.stringify(data))
-		setBooks(data)
+	useEffect(() => {
+		const fetchData = async() => {
+			const data = await getBooksInDB();
+			console.log("load data:"+JSON.stringify(data))
+			setBooks(data)
+		}
+		fetchData();
 	},[]);
 
 	// Mock Data
@@ -52,11 +55,13 @@ const Books = (props) => {
 
     
     return (
-        <div className="flex-row">
+        <div className="container flex-row">
             <div className="flex-large">
             {(mode == "edit") ? (
 						<Fragment>
-							<h3>Edit Book</h3>
+							<div className="centered">
+								<h3>Edit Book</h3>
+							</div>
 							<BookForm
 								editing={true}
 								setViewMode={setViewMode}
@@ -67,7 +72,9 @@ const Books = (props) => {
 					(mode == "new") ? 
 						(
 							<Fragment>
-								<h3>Create Book</h3>
+								<div className="centered">
+									<h3>Create Book</h3>
+								</div>
 								<BookForm
 									editing={false}
 									setViewMode={setViewMode}

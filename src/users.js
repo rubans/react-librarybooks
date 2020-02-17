@@ -6,17 +6,14 @@ import {getUsersInDB} from './firebaseClient'
 export const initialFormState = { id: null, name: '', username: '', password: '' }
 
 const Users = (props) => {
-	// if(!loggedIn())
-	// {
-	// 	redirectToLogin(props);
-	// 	return;
-	// }
 	const[users, setUsers] = useState([]);
-	useEffect(async () => {
-		let mounted = true;
-		const data = await getUsersInDB();
-		console.log("load data:"+JSON.stringify(data))
-		setUsers(data)
+	useEffect(() => {
+		const fetchData = async() => {
+			const data = await getUsersInDB();
+			console.log("load data:"+JSON.stringify(data))
+			setUsers(data)
+		}
+		fetchData()
 	},[]);
 	// Mock Data
 	// const usersData = [
@@ -26,7 +23,6 @@ const Users = (props) => {
 	// ]
 
 	const initialFormState = initialFormState
-
 	// Setting state
 	const [ currentUser, setCurrentUser ] = useState(initialFormState)
 	const [ mode, setViewMode ] = useState("view")
@@ -92,8 +88,6 @@ const Users = (props) => {
 				</div>
 			</div>
 			 ) 
-			//  :
-			//  (<Redirect to={{ pathname: '/login', state: { from: props.location } }} />)
 	)
 }
 

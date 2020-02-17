@@ -130,7 +130,6 @@ export const getUsersInDB = (async (nextPageToken) => {
     await db.collection("Library_Users").get()
     .then(function(querySnapshot) {
         users = querySnapshot.docs.map(doc => ({...doc.data(),id:doc.id}));
-        console.log("users1 : "+JSON.stringify(users))
         return users;
     })
     .catch(function(error) {
@@ -138,7 +137,7 @@ export const getUsersInDB = (async (nextPageToken) => {
         alert(error);
         //throw error;
     });
-    console.log("All documents retrieved!");
     console.log("users : "+JSON.stringify(users))
+    console.log("All documents retrieved!");
     return users;
   })
