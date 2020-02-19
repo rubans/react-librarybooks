@@ -1,10 +1,14 @@
 import React, { useState, Fragment, useEffect } from 'react'
 import BookForm from './forms/BookForm'
 import BookTable from './tables/BookTable'
-import {firebase, updateBookInDB, getBooksInDB, deleteBookInDB} from './firebaseClient'
+import { updateBookInDB, getBooksInDB, deleteBookInDB} from './firebaseClient'
+import { useAuth } from './context/authContext'
 //import {loggedIn} from './userContext'
 
 const Books = (props) => {
+	//const[isAdmin,setAdmin] = useState(useAuth().auth.isAdmin)
+	let auth = useAuth().auth;
+	console.log("admin:"+JSON.stringify(auth))
 	//const authUser = CurrentUser(firebase);
 	console.log("book:"+JSON.stringify(props))
 	//console.log("isAuth1:"+loggedIn())
@@ -57,7 +61,7 @@ const Books = (props) => {
     return (
         <div className="container flex-row">
             <div className="flex-large">
-            {(mode == "edit") ? (
+            {(mode === "edit") ? (
 						<Fragment>
 							<div className="centered">
 								<h3>Edit Book</h3>
@@ -69,7 +73,7 @@ const Books = (props) => {
 								updateBook={updateBook}
 							/>
 				</Fragment> ) : 
-					(mode == "new") ? 
+					(mode === "new") ? 
 						(
 							<Fragment>
 								<div className="centered">
@@ -87,7 +91,7 @@ const Books = (props) => {
 								<div className="centered">
 									<h3>Books</h3>
 								</div>
-								<div style={{ display: "flex", justifyContent: "flex-end" }}>
+								<div style={auth.isAdmin ? { display: "flex", justifyContent: "flex-end" }: { display : "none"}}>
 									<button
 										onClick={() => addBookView()}
 										className="button muted-button"
@@ -95,7 +99,7 @@ const Books = (props) => {
 										Add New Book
 									</button>
 								</div>
-								<BookTable books={books} editRow={editBookView} deleteBook={deleteBook} />
+								<BookTable books={books} editRow={editBookView} deleteBook={deleteBook} isAdmin={auth.isAdmin} isLoggedIn={auth.isLoggedIn} />
 						</Fragment> )}
             </div>
         </div>

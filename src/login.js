@@ -3,8 +3,7 @@ import {useHistory, withRouter, Link} from "react-router-dom"
 import {authorize} from './firebaseClient'
 
 const Login = props => {
-    console.log("login:"+JSON.stringify(props.location.state.from.pathname))
-
+    //console.log("login:"+JSON.stringify(props.location.state.from.pathname))
     const [emailInput, setEmailInput] = useState('')
     const [passwordInput, setPasswordInput] = useState('')
 //    console.log("login history:"+JSON.stringify(props.history))
@@ -28,7 +27,9 @@ const Login = props => {
                 //this token can be anything. You can use random.org to generate a random string;
                 //const token = '123456abcdef';
                 //sessionStorage.setItem('auth-token', token);
-                props.history.push(props.location.state.from.pathname);
+                let redirectTo = (props.location.state) ? props.location.state.from.pathname : ""
+                console.log("redirect to :"+JSON.stringify(redirectTo))
+                props.history.push(redirectTo);
             }
             else
                 throw new Error()
@@ -41,7 +42,7 @@ const Login = props => {
     }
 
 return (
-    <div class="container col-lg-3 center-block">
+    <div className="container col-lg-3 center-block">
         <h3>Login In</h3>
         <form autoComplete="off" onSubmit={handleLoginSubmit}>
             <div className="form-group">

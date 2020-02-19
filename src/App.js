@@ -23,13 +23,13 @@ const App = (props) => {
 		<AuthProvider>
 		<Router>
 			<div className="App">
-				<NavBar loggedInUser={authUser}/>
+				<NavBar/>
 			</div>
 			<br/>
 			<Route path="/" exact component={Home} />
 			<Route path="/login" exact component={Login} />
 			{/* <Route path="/users" render={(props) => <Users {...props} />}/> */}
-			<PrivateRoute loggedIn={authUser} path='/users' component={Users} />
+			<PrivateRoute path='/users' component={Users} />
 			<Route path="/books" render={(props) => <Books {...props} />} />
 			<Route path="/register" exact component={Register}/>
 		</Router>
@@ -37,7 +37,10 @@ const App = (props) => {
 	)
 }
 const Home = () => {
-	return <div>Home page</div>;
+	return (<div className="container">
+				<h2>Home page</h2>
+				<blockquote>Welcome to the Book Library!</blockquote>
+			</div>);
 }
   
 

@@ -9,7 +9,7 @@ import { Redirect, Route } from 'react-router-dom'
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   let loading = useAuth().loading
-  let loggedIn = (useAuth().auth.data !== null)
+  let loggedIn = useAuth().isSessionLoggedIn
 
   console.log("Private Route, Logged User:"+JSON.stringify(loggedIn))
   if (loading) {

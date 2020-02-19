@@ -31,7 +31,6 @@ const EditBookForm = props => {
         <label>Name</label>
         <input type="text" name="name" value={book.name} onChange={handleInputChange} />
         <label>Owner Email</label>
-        {/* <input type="text" name="ownerEmail" value={book.ownerEmail} onChange={handleInputChange} /> */}
         <select onChange={handleInputChange} name="ownerEmail">
         {
           users.map(user => <option value={user.username}>{user.username}</option>)
