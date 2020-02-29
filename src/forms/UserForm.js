@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
 const EditUserForm = props => {
   const initialFormState = props.currentUser
@@ -29,8 +29,8 @@ const EditUserForm = props => {
       <input type="text" name="username" value={user.username} onChange={handleInputChange} />
       <label>Password</label>
       <input type="text" name="password" value={user.password} onChange={handleInputChange} />
-      <button className="button muted-button">Save</button>
-      <button onClick={() => props.setViewMode("viewUser")} className="button muted-button">
+      <button className="btn btn-primary">Save</button>
+      <button onClick={() => props.setViewMode("viewUser")} className="btn btn-danger">
         Cancel
       </button>
     </form>

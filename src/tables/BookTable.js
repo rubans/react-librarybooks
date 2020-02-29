@@ -1,9 +1,9 @@
 import React from 'react'
 
 const BookTable = props => (
-  <table>
-    <thead>
-      <tr>
+  <table class="table table-bordered">
+    <thead>  
+      <tr className="table-primary">
         <th>Book</th>
         <th></th>
       </tr>
@@ -19,13 +19,13 @@ const BookTable = props => (
                   onClick={() => {
                     props.editRow(book)
                   }}
-                  className="button muted-button"
+                  className="btn btn-primary"
                 >
                   Edit
                 </button>
                 <button
                   onClick={() => props.deleteBook(book.id)}
-                  className="button muted-button"
+                  className="btn btn-danger"
                 >
                   Delete
                 </button>
@@ -33,9 +33,8 @@ const BookTable = props => (
               <div style={(props.isLoggedIn && !props.isAdmin) ? { display: "flex", justifyContent: "flex-end" }: { display : "none"}}>
                 <a href={`mailto:${book.ownerEmail}
                   ?subject=Book Library Borrow Request - ${book.name}
-                  &body=Dear Sir/Madam, I'm interested in borrowing ${book.name}. Would you please send me more information please?`}
-                  className="button muted-button"
-                >
+                  &body=Dear Sir/Madam,${escape('\r\n')} I'm interested in borrowing ${book.name}.${escape('\r\n')}Could you send me more information please?`}
+                  className="button muted-button">
                   Borrow
                 </a>
               </div>

@@ -1,5 +1,3 @@
-import {getCurrentUser} from './firebaseClient'
-
 // export const loggedIn = () => {
 // 	var currentUser = getCurrentUser();
 // 	console.log('logged in CurrentUser:'+JSON.stringify(currentUser))

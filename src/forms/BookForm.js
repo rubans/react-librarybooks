@@ -37,8 +37,8 @@ const EditBookForm = props => {
         }
         </select>
         <div className="centered">
-          <button className="button muted-button">Save</button>
-          <button onClick={() => props.setViewMode("viewBook")} className="button muted-button">
+          <button className="btn btn-primary">Save</button>
+          <button onClick={() => props.setViewMode("viewBook")} className="btn btn-danger">
             Cancel
           </button>
         </div>

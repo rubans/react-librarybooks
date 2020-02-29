@@ -91,10 +91,10 @@ const Books = (props) => {
 								<div className="centered">
 									<h3>Books</h3>
 								</div>
-								<div style={auth.isAdmin ? { display: "flex", justifyContent: "flex-end" }: { display : "none"}}>
+								<div  style={auth.isAdmin ? { display: "flex", justifyContent: "flex-end", margin: "10px" }: { display : "none"}}>
 									<button
 										onClick={() => addBookView()}
-										className="button muted-button"
+										className="btn btn-primary"
 									>
 										Add New Book
 									</button>

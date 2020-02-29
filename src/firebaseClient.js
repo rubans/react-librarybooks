@@ -1,5 +1,3 @@
-import { initializeApp, firestore } from "firebase";
-import {global} from "./Global";
 export const firebase = require("firebase");
 require("firebase/firestore");
 // Initialize Cloud Firestore through Firebase
@@ -55,14 +53,14 @@ export const deauthorize = () => {
       });
 }
 
-export const updateBookInDB = (book) => {
+export const updateBookInDB = async (book) => {
         console.log("createBook!");
         console.log("firebase:"+JSON.stringify(firebase.auth()))
         //console.log("cache created : "+global.Date)
         var db = firebase.firestore();
         if(book.id === null)
         {
-            db.collection("Library_Books").add(book)
+            await db.collection("Library_Books").add(book)
             .then(function(docRef) {
                 console.log("Document written with ID: ", docRef.id);
             })
@@ -74,7 +72,7 @@ export const updateBookInDB = (book) => {
         }
         else
         {
-            db.collection("Library_Books").doc(book.id).update(book)
+            await db.collection("Library_Books").doc(book.id).update(book)
             .then(function(docRef) {
                 console.log("Document written with ID: ", book.id);
             })
@@ -84,14 +82,13 @@ export const updateBookInDB = (book) => {
                 //throw error;
             });
         }
+    }
 
-}
-
-export const deleteBookInDB = (id) => {
+export const deleteBookInDB = async(id) => {
     console.log("deleteBook!");
     //console.log("cache created : "+global.Date)
     var db = firebase.firestore();
-    db.collection("Library_Books").doc(id).delete()
+    await db.collection("Library_Books").doc(id).delete()
     .then(function(docRef) { 
         console.log("Document deleted with ID: ", id);
     })

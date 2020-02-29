@@ -1,9 +1,6 @@
-import React, { useState, Fragment } from 'react'
+import React from 'react'
 import Users, {initialFormState} from '../users'
 import UserForm from './UserForm'
-import {
-	Redirect
-} from "react-router-dom";
 import { redirectToLogin } from '../utils';
 import {createUser} from '../firebaseClient'
 

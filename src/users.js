@@ -22,15 +22,15 @@ const Users = (props) => {
 	// 	{ id: 3, name: 'Ben', username: 'benisphere' },
 	// ]
 
-	const initialFormState = initialFormState
+	//const initialFormState = initialFormState
 	// Setting state
 	const [ currentUser, setCurrentUser ] = useState(initialFormState)
 	const [ mode, setViewMode ] = useState("view")
 
 	// CRUD operations
-	const addUser = () => {
-		setViewMode("new")
-	}
+	// const addUser = () => {
+	// 	setViewMode("new")
+	// }
 
 	const deleteUser = id => {
 		setUsers(users.filter(user => user.id !== id))

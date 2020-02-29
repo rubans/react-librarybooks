@@ -24,10 +24,11 @@ const AuthProvider = ({ children }) => {
     } else {
       sessionStorage.isSessionLoggedIn = true;
     }
+    console.log("set Session:"+sessionStorage.isSessionLoggedIn)
     setAuth({data: data, 
       isAdmin : (data && data.email === "admin@booklibrary.com"), 
       isLoggedIn : (data !== null),
-      isSessionLoggedin : (sessionStorage.isSessionLoggedIn === true)
+      isSessionLoggedin : (sessionStorage.isSessionLoggedIn === String(true))
     });
   };
  // a function that will help us to add the user data in the auth;
