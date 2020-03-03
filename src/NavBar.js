@@ -1,5 +1,6 @@
 import React from 'react'
 import { Nav,Navbar } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { useAuth, authSignOut } from './context/authContext'
 
 
@@ -16,11 +17,11 @@ const NavBar = (props) => {
 	return (
 	<Navbar bg="primary" variant="dark">
 					<Nav className="mr-auto">
-						<Nav.Link href="/">Home</Nav.Link>
+						<Link to="/" class="nav-link">Home</Link>
 						{(isAdmin) ? 
-							(<Nav.Link href="/users">Users</Nav.Link>) : ("")
+							(<Link to="/users" class="nav-link">Users</Link>) : ("")
 						}
-						<Nav.Link href="/books">Books</Nav.Link>
+						<Link to="/books" class="nav-link">Books</Link>
 					</Nav>
 					<Navbar.Collapse className="justify-content-end">
 						{(email !== "") ?
