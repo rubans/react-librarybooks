@@ -1,9 +1,7 @@
-runtime: python27
-api_version: 1
-threadsafe: true
+runtime: nodejs10
 handlers:
-- url: /
-  static_files: build/index.html
-  upload: build/index.html
-- url: /
-  static_dir: build
+  - url: /static
+    static_dir: build/static
+  - url: .*
+    static_files: build/index.html
+    upload: build/index.html
